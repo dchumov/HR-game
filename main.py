@@ -1,5 +1,5 @@
 """
-OMNITECH CHRONICLES — Telegram Bot (Episode 1 MVP)
+OMNITECH CHRONICLES — Telegram Bot
 Stack : pyTelegramBotAPI (telebot)  +  SQLite
 Deploy: Railway
 """
@@ -17,7 +17,6 @@ load_dotenv()
 TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 bot = telebot.TeleBot(TOKEN, parse_mode="Markdown")
 
-
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def stats_line(p: dict) -> str:
@@ -31,13 +30,27 @@ def stats_line(p: dict) -> str:
 
 def stats_block(p: dict) -> str:
     flag_labels = {
-        "outfit_classic":  "👔 Классический костюм",
-        "outfit_iron":     "👠 Железная леди",
-        "outfit_reform":   "✨ Реформатор",
-        "council_respect": "🏆 Уважение совета",
-        "mark_neutral":    "🤝 Марк: нейтрал",
-        "mark_ally":       "❤️ Марк: союзник",
-        "mark_cold":       "🧊 Марк: закрытый",
+        # Эпизод 1
+        "outfit_classic":      "👔 Классический костюм",
+        "outfit_iron":         "👠 Железная леди",
+        "outfit_reform":       "✨ Реформатор",
+        "council_respect":     "🏆 Уважение совета",
+        "mark_neutral":        "🤝 Марк: нейтрал",
+        "mark_ally":           "❤️ Марк: союзник",
+        "mark_cold":           "🧊 Марк: закрытый",
+        # Эпизод 2
+        "ep2_outfit_business": "🤵 Деловой шик",
+        "ep2_outfit_stage":    "✨ Сценический образ",
+        "ep2_outfit_media":    "📸 Звезда медиа",
+        "media_star":          "🚀 #OmniTechStarship в трендах",
+        "peter_neutral":       "🔬 Пётр: нейтрал",
+        "peter_ally":          "🤝 Пётр: союзник",
+        "peter_skeptic":       "😒 Пётр: скептик",
+        # Эпизод 3
+        "team_loyalty":        "💝 Персональный подход к команде",
+        "team_saved":          "📋 Команда удержана (допсоглашения)",
+        "team_family":         "❤️ Команда — своя",
+        "ep3_outfit_casual":   "👕 Кэжуал-образ",
     }
     flag_lines = ""
     if p["flags"]:
@@ -46,7 +59,7 @@ def stats_block(p: dict) -> str:
         )
     return (
         "━━━━━━━━━━━━━━━━\n"
-        "📈 *Итоги эпизода 1*\n\n"
+        "📈 *Итоги эпизода*\n\n"
         f"🧠 Логика:     *{p['logic']}*\n"
         f"💛 Эмпатия:    *{p['empathy']}*\n"
         f"👑 Авторитет:  *{p['authority']}*\n"
@@ -81,14 +94,17 @@ def send_scene(chat_id: int, player: dict, scene_id: str):
     choices = scene.get("choices", [])
     kb = build_keyboard(scene_id, choices, player["crystals"]) if choices else None
 
-    # Картинку отправляем отдельно, текст с кнопками — отдельным сообщением
-    image = scene.get("image")
-    if image:
-        try:
-            bot.send_photo(chat_id, image)
-        except Exception:
-            pass  # если картинка не загрузилась — продолжаем без неё
+    # Send image if file exists in images/ folder
+    image_file = scene.get("image")
+    if image_file:
+        image_path = os.path.join("images", image_file)
+        if os.path.isfile(image_path):
+            with open(image_path, "rb") as img:
+                bot.send_photo(chat_id, img, caption=text,
+                               parse_mode="Markdown", reply_markup=kb)
+            return
 
+    # Fallback: text only
     bot.send_message(chat_id, text, reply_markup=kb)
 
 
@@ -105,8 +121,8 @@ def cmd_start(message):
 
     bot.send_message(
         message.chat.id,
-        "💻 *HR‑КОД: СБОЙ В СИСТЕМЕ* 💻\n\n"
-        "Вас ждёт история девяти девушек‑HR, которые спасут IT‑гигант OmniTech\n"
+        "💻 *HR\u2011КОД: СБОЙ В СИСТЕМЕ* 💻\n\n"
+        "Вас ждёт история девяти девушек\u2011HR, которые спасут IT\u2011гигант OmniTech\n"
         "от бюрократии, багов и корпоративного саботажа.\n\n"
         "Прокачивайте *Логику*, *Эмпатию* и *Авторитет*.\n"
         "Тратьте 💎 кристаллы на премиальные выборы — они открывают лучшие исходы.\n\n"
@@ -146,14 +162,6 @@ def cmd_help(message):
     )
 
 
-# ── File ID helper ────────────────────────────────────────────────────────────
-
-@bot.message_handler(content_types=["photo"])
-def get_file_id(message):
-    file_id = message.photo[-1].file_id
-    bot.reply_to(message, f"`{file_id}`", parse_mode="Markdown")
-
-
 # ── Callback handler ──────────────────────────────────────────────────────────
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -189,7 +197,7 @@ def handle_choice(call):
     if player["crystals"] < cost:
         bot.answer_callback_query(
             call.id,
-            f"Не хватает кристаллов! Нужно 💎×{cost}, у вас {player['crystals']}.",
+            f"Не хватает кристаллов! Нужно 💎\u00d7{cost}, у вас {player['crystals']}.",
             show_alert=True,
         )
         return
@@ -234,5 +242,6 @@ def handle_choice(call):
 
 if __name__ == "__main__":
     init_db()
+    os.makedirs("images", exist_ok=True)
     print("✅ OmniTech bot started (polling)…")
     bot.infinity_polling()
