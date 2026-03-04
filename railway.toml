@@ -1,0 +1,4 @@
+[deploy]
+startCommand = "uv run python -B main.py"
+healthcheckPath = "/"
+restartPolicyType = "always"
