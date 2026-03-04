@@ -9,7 +9,7 @@ SCENES: dict = {
 
     # ── Сцена 1.1 ─────────────────────────────
     "ep1_intro": {
-        "image": BASE + "ep1_intro.jpg",
+        "image": BASE + "ep1_intro.jpeg",
         "text": (
             "🌧 *Эпизод 1 — Шах и мат, господа*\n\n"
             "Раннее утро. 42‑й этаж башни OmniTech.\n"
@@ -46,7 +46,7 @@ SCENES: dict = {
 
     # ── Сцена 1.2 ─────────────────────────────
     "ep1_council_attack": {
-        "image": BASE + "ep1_council.jpg",
+        "image": BASE + "ep1_council.jpeg",
         "text": (
             "🏛 *Зал заседаний*\n\n"
             "Семь директоров по периметру длинного стола.\n"
@@ -85,7 +85,7 @@ SCENES: dict = {
 
     # ── Сцена 1.3 (основная) ──────────────────
     "ep1_victor_pushback": {
-        "image": BASE + "ep1_deadline.jpg",
+        "image": BASE + "ep1_deadline.jpeg",
         "text": (
             "😤 *Виктор не сдаётся*\n\n"
             "🗣 *Виктор:*\n"
@@ -114,7 +114,7 @@ SCENES: dict = {
 
     # ── Сцена 1.3 (слабая позиция) ────────────
     "ep1_weak_position": {
-        "image": BASE + "ep1_council.jpg",
+        "image": BASE + "ep1_council.jpeg",
         "text": (
             "😔 *Позиция сдана*\n\n"
             "Виктор едва заметно улыбается.\n"
@@ -133,7 +133,7 @@ SCENES: dict = {
 
     # ── Сцена 1.4 (победа с кристаллами) ──────
     "ep1_premium_win": {
-        "image": BASE + "ep1_premium.jpg",
+        "image": BASE + "ep1_premium.jpeg",
         "text": (
             "🌟 *Козырь на столе*\n\n"
             "Евгения кладёт стопку листов. Не торопится.\n"
@@ -158,7 +158,7 @@ SCENES: dict = {
 
     # ── Сцена 1.5 (дедлайн) ───────────────────
     "ep1_24h_deadline": {
-        "image": BASE + "ep1_deadline.jpg",
+        "image": BASE + "ep1_deadline.jpeg",
         "text": (
             "⏰ *Дедлайн*\n\n"
             "🗣 *Виктор:*\n"
@@ -178,7 +178,7 @@ SCENES: dict = {
 
     # ── Сцена 1.6 ─────────────────────────────
     "ep1_corridor_mark": {
-        "image": BASE + "ep1_corridor.jpg",
+        "image": BASE + "ep1_corridor.jpeg",
         "text": (
             "🚰 *Коридор*\n\n"
             "Марк Волков — ведущий архитектор — стоит у кулера с бумажным стаканом\n"
@@ -217,7 +217,7 @@ SCENES: dict = {
 
     # ── Сцена 1.7 ─────────────────────────────
     "ep1_team_chat": {
-        "image": BASE + "ep1_chat.jpg",
+        "image": BASE + "ep1_chat.jpeg",
         "text": (
             "💬 *Зашифрованный канал «Девятый отдел»*\n\n"
             "🗣 *Евгения:* «Код красный. Совет одобрил грязные увольнения.\n"
