@@ -80,6 +80,15 @@ def send_scene(chat_id: int, player: dict, scene_id: str):
 
     choices = scene.get("choices", [])
     kb = build_keyboard(scene_id, choices, player["crystals"]) if choices else None
+
+    # Картинку отправляем отдельно, текст с кнопками — отдельным сообщением
+    image = scene.get("image")
+    if image:
+        try:
+            bot.send_photo(chat_id, image)
+        except Exception:
+            pass  # если картинка не загрузилась — продолжаем без неё
+
     bot.send_message(chat_id, text, reply_markup=kb)
 
 
@@ -137,6 +146,14 @@ def cmd_help(message):
     )
 
 
+# ── File ID helper ────────────────────────────────────────────────────────────
+
+@bot.message_handler(content_types=["photo"])
+def get_file_id(message):
+    file_id = message.photo[-1].file_id
+    bot.reply_to(message, f"`{file_id}`", parse_mode="Markdown")
+
+
 # ── Callback handler ──────────────────────────────────────────────────────────
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -148,14 +165,12 @@ def handle_choice(call):
     if not player:
         player = create_player(user_id)
 
-    # Parse callback data
     try:
         scene_id, idx_str = call.data.rsplit(":", 1)
         choice_idx = int(idx_str)
     except ValueError:
         return
 
-    # Guard against replaying old buttons
     if player["scene"] != scene_id:
         bot.answer_callback_query(call.id, "Это решение уже принято.", show_alert=True)
         return
@@ -171,7 +186,6 @@ def handle_choice(call):
     choice = choices[choice_idx]
     cost = choice.get("cost", 0)
 
-    # Crystal check
     if player["crystals"] < cost:
         bot.answer_callback_query(
             call.id,
@@ -180,7 +194,6 @@ def handle_choice(call):
         )
         return
 
-    # Apply effects
     new_crystals  = player["crystals"]  - cost
     new_logic     = player["logic"]     + choice.get("delta_logic",     0)
     new_empathy   = player["empathy"]   + choice.get("delta_empathy",   0)
@@ -193,7 +206,6 @@ def handle_choice(call):
 
     next_scene = choice.get("next", "ep1_end")
 
-    # Restart
     if next_scene == "__restart__":
         player = reset_player(user_id)
         bot.send_message(call.message.chat.id, "🔄 *Начинаем заново!*")
@@ -211,7 +223,6 @@ def handle_choice(call):
     )
     player = get_player(user_id)
 
-    # Flavour text
     result_text = choice.get("result_text", "")
     if result_text:
         bot.send_message(call.message.chat.id, result_text)
