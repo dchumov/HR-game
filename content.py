@@ -1,20 +1,15 @@
 # ─────────────────────────────────────────────
 #  OMNITECH CHRONICLES — Episode 1 content
-#  Each scene:
-#    text          — message shown to player (Markdown)
-#    choices       — list of option dicts:
-#      label           — button text
-#      cost            — 💎 cost (0 = free)
-#      delta_logic / delta_empathy / delta_authority  — stat changes
-#      flag            — string added to player flags (optional)
-#      next            — next scene id  ("__restart__" for new game)
-#      result_text     — short flavour text sent before next scene
+#  Images stored in /images/ folder in repo
 # ─────────────────────────────────────────────
+
+BASE = "https://raw.githubusercontent.com/dchumov/HR-game/main/images/"
 
 SCENES: dict = {
 
     # ── Сцена 1.1 ─────────────────────────────
     "ep1_intro": {
+        "image": BASE + "ep1_intro.jpg",
         "text": (
             "🌧 *Эпизод 1 — Шах и мат, господа*\n\n"
             "Раннее утро. 42‑й этаж башни OmniTech.\n"
@@ -51,6 +46,7 @@ SCENES: dict = {
 
     # ── Сцена 1.2 ─────────────────────────────
     "ep1_council_attack": {
+        "image": BASE + "ep1_council.jpg",
         "text": (
             "🏛 *Зал заседаний*\n\n"
             "Семь директоров по периметру длинного стола.\n"
@@ -89,6 +85,7 @@ SCENES: dict = {
 
     # ── Сцена 1.3 (основная) ──────────────────
     "ep1_victor_pushback": {
+        "image": BASE + "ep1_deadline.jpg",
         "text": (
             "😤 *Виктор не сдаётся*\n\n"
             "🗣 *Виктор:*\n"
@@ -117,6 +114,7 @@ SCENES: dict = {
 
     # ── Сцена 1.3 (слабая позиция) ────────────
     "ep1_weak_position": {
+        "image": BASE + "ep1_council.jpg",
         "text": (
             "😔 *Позиция сдана*\n\n"
             "Виктор едва заметно улыбается.\n"
@@ -135,6 +133,7 @@ SCENES: dict = {
 
     # ── Сцена 1.4 (победа с кристаллами) ──────
     "ep1_premium_win": {
+        "image": BASE + "ep1_premium.jpg",
         "text": (
             "🌟 *Козырь на столе*\n\n"
             "Евгения кладёт стопку листов. Не торопится.\n"
@@ -159,6 +158,7 @@ SCENES: dict = {
 
     # ── Сцена 1.5 (дедлайн) ───────────────────
     "ep1_24h_deadline": {
+        "image": BASE + "ep1_deadline.jpg",
         "text": (
             "⏰ *Дедлайн*\n\n"
             "🗣 *Виктор:*\n"
@@ -178,6 +178,7 @@ SCENES: dict = {
 
     # ── Сцена 1.6 ─────────────────────────────
     "ep1_corridor_mark": {
+        "image": BASE + "ep1_corridor.jpg",
         "text": (
             "🚰 *Коридор*\n\n"
             "Марк Волков — ведущий архитектор — стоит у кулера с бумажным стаканом\n"
@@ -216,6 +217,7 @@ SCENES: dict = {
 
     # ── Сцена 1.7 ─────────────────────────────
     "ep1_team_chat": {
+        "image": BASE + "ep1_chat.jpg",
         "text": (
             "💬 *Зашифрованный канал «Девятый отдел»*\n\n"
             "🗣 *Евгения:* «Код красный. Совет одобрил грязные увольнения.\n"
@@ -250,7 +252,7 @@ SCENES: dict = {
                 "next": "__restart__",
             },
         ],
-        "show_final_stats": True,   # special flag → bot will print full stat block
+        "show_final_stats": True,
     },
 }
 
