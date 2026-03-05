@@ -66,21 +66,21 @@ SCENES = {
         ),
         "choices": [
             {
-                "label": "\u00abЭто прямой путь к судебным искам на десятки миллионов\u00bb",
+                "label": "\u00abБудут судебные иски на миллионы\u00bb",
                 "cost": 0,
                 "delta_logic": 1,
                 "next": "ep1_victor_pushback",
                 "result_text": "⚖️ +1 Логика | Юридические риски перевешивают экономию.",
             },
             {
-                "label": "\u00abТе, кто останется, всё видят. Вы получите выгоревшую команду\u00bb",
+                "label": "\u00abВы получите выгоревшую команду\u00bb",
                 "cost": 0,
                 "delta_empathy": 1,
                 "next": "ep1_victor_pushback",
                 "result_text": "💔 +1 Эмпатия | Токсичная среда разрушает производительность.",
             },
             {
-                "label": "\u00abХорошо. Я... посмотрю, что можно сделать\u00bb",
+                "label": "\u00abХорошо. Я посмотрю, что можно сделать\u00bb",
                 "cost": 0,
                 "delta_authority": -1,
                 "next": "ep1_weak_position",
@@ -101,7 +101,7 @@ SCENES = {
         ),
         "choices": [
             {
-                "label": "Положить на стол готовый план реструктуризации",
+                "label": "Готовый план реструктуризации",
                 "cost": 20,
                 "delta_authority": 2,
                 "flag": "council_respect",
@@ -179,7 +179,7 @@ SCENES = {
         ),
         "choices": [
             {
-                "label": "\u00abЯ делаю свою работу. Ты — свою\u00bb",
+                "label": "\u00abЯ делаю свою работу\u00bb",
                 "cost": 0,
                 "delta_logic": 1,
                 "flag": "mark_neutral",
@@ -195,7 +195,7 @@ SCENES = {
                 "result_text": "❤️ +1 Эмпатия | Марк понимает: Евгения на их стороне.",
             },
             {
-                "label": "\u00abМарк, это не твой уровень. Возвращайся к задачам\u00bb",
+                "label": "\u00abМарк, это не твой уровень\u00bb",
                 "cost": 0,
                 "flag": "mark_cold",
                 "next": "ep1_team_chat",
