@@ -12,7 +12,7 @@ SCENES = {
 
     # ── Сцена 4.1 ─────────────────────────────
     "ep4_intro": {
-        "image": "olga_target_folder.png.png",
+        "image": "IMG olga_target_folder.png.png",
         "text": (
             "🩺 *Эпизод 4 — Хирургия*\n\n"
             "Кабинет Ольги. Жалюзи опущены.\n"
@@ -44,7 +44,7 @@ SCENES = {
 
     # ── Сцена 4.2 ─────────────────────────────
     "ep4_dossier": {
-        "image": "olga_evidence.png.png",
+        "image": "IMG olga_evidence.png.png",
         "text": (
             "📂 *Семьдесят два часа*\n\n"
             "Ольга работает методично.\n"
@@ -82,7 +82,7 @@ SCENES = {
 
     # ── Сцена 4.3 (кристальный путь) ──────────
     "ep4_premium_hunt": {
-        "image": "olga_assassin.png.png",
+        "image": "IMG olga_assassin.png.png",
         "text": (
             "🔐 *Полный доступ*\n\n"
             "С расширенным доступом Ольга получает то,\n"
@@ -109,7 +109,7 @@ SCENES = {
 
     # ── Сцена 4.4 ─────────────────────────────
     "ep4_final_ritual": {
-        "image": "olga_vs_maxim.png.png",
+        "image": "IMG olga_vs_maxim.png.png",
         "text": (
             "🤝 *Переговорная*\n\n"
             "Максим заходит с видом человека,\n"
@@ -151,7 +151,7 @@ SCENES = {
 
     # ── Сцена 4.5 (кристальный путь) ──────────
     "ep4_final_ritual_premium": {
-        "image": "olga_master_surgery.png.png",
+        "image": "IMG olga_master_surgery.png.png",
         "text": (
             "⚔️ *Разговор, который уже закончен*\n\n"
             "Максим заходит уверенно.\n"
@@ -182,7 +182,7 @@ SCENES = {
 
     # ── Сцена 4.6 ─────────────────────────────
     "ep4_victory": {
-        "image": "olga_coffee_smile.png.png",
+        "image": "IMG olga_coffee_smile.png.png",
         "text": (
             "☕ *Переговорная пуста*\n\n"
             "На столе — три подписанных листа и пропуск Максима.\n\n"
@@ -208,7 +208,7 @@ SCENES = {
 
     # ── Сцена 4.7 (кристальный путь) ──────────
     "ep4_victory_premium": {
-        "image": "olga_perfect_surgery.png.png",
+        "image": "IMG olga_perfect_surgery.png.png",
         "text": (
             "🏆 *147 позиций*\n\n"
             "Максим вышел без слов.\n"
@@ -235,7 +235,7 @@ SCENES = {
 
     # ── Финал эпизода 4 ───────────────────────
     "ep4_episode_end": {
-        "image": "hr_surgery_complete.png.png",
+        "image": "IMG hr_surgery_complete.png.png",
         "text": (
             "✅ *Вечер. Кабинет Ольги.*\n\n"
             "На доске — имена. Рядом с некоторыми — галочки.\n"
