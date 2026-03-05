@@ -107,7 +107,7 @@ def cmd_start(message):
     bot.send_message(
         message.chat.id,
         "💻 *HR\u2011КОД: СБОЙ В СИСТЕМЕ* 💻\n\n"
-        "Вас ждёт история девяти девушек\u2011HR, которые спасут IT\u2011гигант OmniTech\n"
+        "Вас ждёт история девяти девушек\u2011HR, которые спасят IT\u2011гигант OmniTech\n"
         "от бюрократии, багов и корпоративного саботажа.\n\n"
         "Прокачивайте *Логику*, *Эмпатию* и *Авторитет*.\n"
         "Тратьте 💎 кристаллы на премиальные выборы — они открывают лучшие исходы.\n\n"
@@ -143,7 +143,7 @@ def cmd_help(message):
         "/stats — ваши статы и флаги\n"
         "/restart — сбросить и начать заново\n\n"
         "💎 *Кристаллы* — валюта для премиальных выборов.\n"
-        "Начинаете с 30 💎. Незаблокированные выборы всегда бесплатны.",
+        "Начинаете с 30 💎. За каждый новый эпизод получаете +10 💎.",
     )
 
 
@@ -199,12 +199,17 @@ def handle_choice(call):
 
     next_scene = choice.get("next", "ep1_end")
 
+    # Начисляем +10 кристаллов при переходе на новый эпизод
+    current_ep = scene_id.split("_")[0]  # Извлекаем ep1, ep2 и т.д.
+    next_ep = next_scene.split("_")[0]
+    if next_ep != current_ep and next_ep.startswith("ep"):
+        new_crystals += 10
 
     if next_scene == "__ending_router__":
         # Count ally flags from all episodes
         ally_flags = {
             "media_star", "team_loyalty", "fired_toxic",
-            "hired_visioner", "mentorship_success",
+            "hired_visioner", "mentorship_succ",
             "vendor_defeated", "council_respect",
         }
         flag_count = sum(1 for f in flags if f in ally_flags)
