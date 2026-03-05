@@ -199,6 +199,26 @@ def handle_choice(call):
 
     next_scene = choice.get("next", "ep1_end")
 
+
+    if next_scene == "__ending_router__":
+        # Count ally flags from all episodes
+        ally_flags = {
+            "media_star", "team_loyalty", "fired_toxic",
+            "hired_visioner", "mentorship_success",
+            "vendor_defeated", "council_respect",
+        }
+        flag_count = sum(1 for f in flags if f in ally_flags)
+        authority = new_authority
+
+        if flag_count >= 7 or (flag_count >= 5 and authority >= 5):
+            next_scene = "ep10_perfect"
+        elif flag_count >= 4:
+            next_scene = "ep10_strong"
+        elif flag_count >= 2:
+            next_scene = "ep10_steady"
+        else:
+            next_scene = "ep10_foundation"
+
     if next_scene == "__restart__":
         player = reset_player(user_id)
         bot.send_message(call.message.chat.id, "🔄 *Начинаем заново!*")
