@@ -79,8 +79,10 @@ def send_scene(chat_id: int, player: dict, scene_id: str):
     image_file = scene.get("image")
     if image_file:
         base = image_file.rsplit(".", 1)[0]
-        ext  = image_file.rsplit(".", 1)[-1]
-        candidates = [image_file] + [base + e for e in (".jpeg", ".jpg", ".png") if e != f".{ext}"]
+        # Ищем оригинальный файл и все альтернативные расширения
+        candidates = [image_file, base + ".jpeg", base + ".jpg", base + ".png"]
+        # Удаляем дубликаты (если оригинальный файл уже был в списке)
+        candidates = list(dict.fromkeys(candidates))
         for candidate in candidates:
             image_path = os.path.join("images", candidate)
             if os.path.isfile(image_path):
