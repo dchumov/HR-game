@@ -161,7 +161,7 @@ SCENES = {
 
     # ── Сцена 7.5 ─────────────────────────────
     "ep7_bridge_conflict": {
-        "image": "bridge_collapse.png",
+        "image": "bridge_collapse.jpeg",
         "text": (
             "💥 *35-я минута — мост рушится*\n\n"
             "Два бревна разошлись под весом первого человека.\n\n"
