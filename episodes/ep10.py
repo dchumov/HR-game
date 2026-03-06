@@ -21,20 +21,18 @@ FLAG_LABELS = {
 # council_respect (ep1) → акционер голосует против слияния
 
 
-# ── Имена изображений (соответствуют файлам в uploads) ───────────
-# Здесь централизованно меняем имена, если файлы переименуются
 IMAGES = {
-    "intro":            "ep10_intro_morning.png",
-    "hall":             "ep10_shareholders_hall.png",
-    "pushback":         "ep10_victor_pushback.png",
-    "allies":           "ep10_allies_activate.png",
-    "victor_final":     "ep10_victor_pushback.png",   # повторно используем
-    "ending_check":     "ep10_intro_morning.png",      # fallback до появления отдельного арта
-    "perfect":          "ep10_good.png",               # заменить на perfect_ending.png когда появится
-    "strong":           "ep10_good.png",
-    "steady":           "ep10_normal.png",
-    "foundation":       "ep10_bad.png",
-    "credits":          "ep10_allies_activate.png",
+    "intro":        "ep10_intro_morning.png",
+    "hall":         "ep10_shareholders_hall.png",
+    "pushback":     "ep10_victor_pushback.png",
+    "allies":       "ep10_allies_activate.png",
+    "victor_final": "ep10_victor_pushback.png",
+    "ending_check": "ep10_intro_morning.png",
+    "perfect":      "ep10_good.png",
+    "strong":       "ep10_good.png",
+    "steady":       "ep10_normal.png",
+    "foundation":   "ep10_bad.png",
+    "credits":      "ep10_allies_activate.png",
 }
 
 SCENES = {
@@ -110,7 +108,7 @@ SCENES = {
             "Виктор (не оборачиваясь):\n"
             "«Евгения, вы можете остаться. Повестка утверждена.»\n\n"
             "Зал смотрит на неё.\n\n"
-            "Первый ход:"
+            "*Первый ход:*"
         ),
         "choices": [
             {
@@ -141,7 +139,7 @@ SCENES = {
     "ep10_victor_pushback": {
         "image": "ep10_victor_pushback.png",
         "text": (
-            "Три минуты\n\n"
+            "*Три минуты*\n\n"
             "Виктор закрывает планшет.\n"
             "Первый раз за всё собрание смотрит на Евгению прямо.\n\n"
             "Виктор:\n"
@@ -176,37 +174,65 @@ SCENES = {
         ],
     },
 
-    # ── Сцена 10.4 (флаговая) ─────────────────
+    # ── Сцена 10.4 ────────────────────────────
     "ep10_allies_activate": {
         "image": "ep10_allies_activate.png",
         "text": (
             "*Девятый отдел выходит вперёд*\n\n"
             "Что происходит дальше — зависит от того,\n"
             "что было сделано за девять эпизодов.\n\n"
-            "Ирина (флаг media-star):\n"
+            "Ирина:\n"
             "«Антон Кравцов в прямом эфире. Reuters и три издания.\n"
             "Индустрия смотрит это собрание прямо сейчас.»\n\n"
-            "Галина (флаг vendor-defeated):\n"
+            "Галина:\n"
             "«Схема закупок аффилиатов за два года — на столе.\n"
             "Если сделка состоится, копия уходит в налоговую через час.»\n\n"
-            "Ольга (флаг fired-toxic):\n"
+            "Ольга:\n"
             "«Документы по статье 81 готовы.\n"
             "Виктор Александрович — ваша подпись нужна вот здесь.»\n\n"
-            "Екатерина (флаг hired-visioner):\n"
+            "Екатерина:\n"
             "«Позвольте представить нового CEO OmniTech.\n"
             "Он принял оффер три дня назад.»\n\n"
-            "Виктория (флаг mentorship-success):\n"
+            "Виктория:\n"
             "«Starship деплоится прямо сейчас.»\n"
             "[На экране вместо TechMerge — архитектура Starship.]\n\n"
-            "Акционер (флаг council-respect):\n"
+            "Акционер:\n"
             "«Виктор, я голосую против слияния.\n"
-            "Прошу занести в протокол.»"
+            "Прошу занести в протокол.»\n\n"
+            "_Зал замер. Виктор стоит у трибуны.\n"
+            "Евгения видит, что он считает — варианты кончаются._\n\n"
+            "💬 *Что делает Евгения:*"
         ),
         "choices": [
             {
-                "label": "Продолжить",
+                "label": "Молчит — пусть зал сам сделает вывод",
                 "cost": 0,
+                "delta_authority": 2,
                 "next": "ep10_victor_final",
+                "result_text": (
+                    "👑 +2 Авторитет | Когда все козыри на столе — "
+                    "слова только мешают. Зал смотрит на Виктора."
+                ),
+            },
+            {
+                "label": "«Это строили люди в этом зале»",
+                "cost": 0,
+                "delta_empathy": 1,
+                "next": "ep10_victor_final",
+                "result_text": (
+                    "💛 +1 Эмпатия | Не победа над Виктором — "
+                    "напоминание акционерам, что они продают."
+                ),
+            },
+            {
+                "label": "«Виктор, слово за вами»",
+                "cost": 0,
+                "delta_logic": 1,
+                "next": "ep10_victor_final",
+                "result_text": (
+                    "🧠 +1 Логика | Передать ход противнику, "
+                    "когда у него нет хода — сильнейший приём."
+                ),
             },
         ],
     },
