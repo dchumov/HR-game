@@ -86,7 +86,7 @@ SCENES = {
 
     # ── Сцена 8.3 (премиум-путь) ──────────────
     "ep8_premium_checkmate": {
-        "image": "galina_perfect_trap.png",
+        "image": "galinatrap.jpeg",
         "text": (
             "🔐 *Расширенный доступ — другой уровень*\n\n"
             "💳 *Транзакции:* три перевода на кипрскую структуру —\n"
@@ -236,7 +236,7 @@ SCENES = {
 
     # ── Сцена 8.6 ─────────────────────────────
     "ep8_vendor_call": {
-        "image": "galina_phone_vendor.jpeg",
+        "image": "galinavendor.jpeg",
         "text": (
             "📞 *Звонок CEO вендора — напрямую*\n\n"
             "🗣 *Галина:*\n"
@@ -264,7 +264,7 @@ SCENES = {
 
     # ── Сцена 8.6б (звонок с доказательствами) 
     "ep8_phone_checkmate": {
-        "image": "galina_phone_vendor.jpeg",
+        "image": "galinavendor.jpeg",
         "text": (
             "☎️ *Звонок CEO вендора*\n\n"
             "🗣 *Галина:*\n"
@@ -291,7 +291,7 @@ SCENES = {
 
     # ── Сцена 8.6в (звонок после письма премиум)
     "ep8_phone_checkmate_premium": {
-        "image": "galina_phone_checkmate.jpeg",
+        "image": "galinacheckmate.jpeg",
         "text": (
             "☎️ *Звонок CEO в ответ на письмо*\n\n"
             "🗣 *CEO:*\n"
@@ -317,7 +317,7 @@ SCENES = {
 
     # ── Сцена 8.6г (звонок прямо с доказательствами)
     "ep8_phone_checkmate_direct": {
-        "image": "galina_phone_checkmate.jpeg",
+        "image": "galinacheckmate.jpeg",
         "text": (
             "☎️ *Прямой звонок CEO с материалами*\n\n"
             "🗣 *Галина:*\n"
