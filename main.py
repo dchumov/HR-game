@@ -20,6 +20,9 @@ load_dotenv()
 TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 bot = telebot.TeleBot(TOKEN, parse_mode="Markdown")
 
+# Telegram limits
+CAPTION_LIMIT = 1024
+
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -55,7 +58,7 @@ def build_keyboard(scene_id: str, choices: list, crystals: int) -> InlineKeyboar
         cost = choice.get("cost", 0)
         label = choice["label"]
         if cost > 0:
-            label = f"💎\u00d7{cost} {label}" if crystals >= cost else f"🔒 💎\u00d7{cost} {label}"
+            label = f"💎×{cost} {label}" if crystals >= cost else f"🔒 💎×{cost} {label}"
         kb.add(InlineKeyboardButton(label, callback_data=f"{scene_id}:{i}"))
     return kb
 
@@ -79,16 +82,29 @@ def send_scene(chat_id: int, player: dict, scene_id: str):
     image_file = scene.get("image")
     if image_file:
         base = image_file.rsplit(".", 1)[0]
-        # Ищем оригинальный файл и все альтернативные расширения
         candidates = [image_file, base + ".jpeg", base + ".jpg", base + ".png"]
-        # Удаляем дубликаты (если оригинальный файл уже был в списке)
         candidates = list(dict.fromkeys(candidates))
         for candidate in candidates:
             image_path = os.path.join("images", candidate)
             if os.path.isfile(image_path):
                 with open(image_path, "rb") as img:
-                    bot.send_photo(chat_id, img, caption=text,
-                                   parse_mode="Markdown", reply_markup=kb)
+                    # ── ФИКС: Telegram caption limit = 1024 символа ──────────
+                    # Если текст длиннее — отправляем фото отдельно,
+                    # клавиатуру прикрепляем к текстовому сообщению.
+                    if len(text) <= CAPTION_LIMIT:
+                        bot.send_photo(
+                            chat_id, img,
+                            caption=text,
+                            parse_mode="Markdown",
+                            reply_markup=kb,
+                        )
+                    else:
+                        bot.send_photo(chat_id, img)
+                        bot.send_message(
+                            chat_id, text,
+                            parse_mode="Markdown",
+                            reply_markup=kb,
+                        )
                 return
 
     # Fallback: text only
@@ -108,8 +124,8 @@ def cmd_start(message):
 
     bot.send_message(
         message.chat.id,
-        "💻 *HR\u2011КОД: СБОЙ В СИСТЕМЕ* 💻\n\n"
-        "Вас ждёт история девяти девушек\u2011HR, которые спасят IT\u2011гигант OmniTech\n"
+        "💻 *HR‑КОД: СБОЙ В СИСТЕМЕ* 💻\n\n"
+        "Вас ждёт история девяти девушек‑HR, которые спасут IT‑гигант OmniTech\n"
         "от бюрократии, багов и корпоративного саботажа.\n\n"
         "Прокачивайте *Логику*, *Эмпатию* и *Авторитет*.\n"
         "Тратьте 💎 кристаллы на премиальные выборы — они открывают лучшие исходы.\n\n"
@@ -184,7 +200,7 @@ def handle_choice(call):
     if player["crystals"] < cost:
         bot.answer_callback_query(
             call.id,
-            f"Не хватает кристаллов! Нужно 💎\u00d7{cost}, у вас {player['crystals']}.",
+            f"Не хватает кристаллов! Нужно 💎×{cost}, у вас {player['crystals']}.",
             show_alert=True,
         )
         return
@@ -202,19 +218,29 @@ def handle_choice(call):
     next_scene = choice.get("next", "ep1_end")
 
     # Начисляем +10 кристаллов при переходе на новый эпизод
-    current_ep = scene_id.split("_")[0]  # Извлекаем ep1, ep2 и т.д.
+    current_ep = scene_id.split("_")[0]
     next_ep = next_scene.split("_")[0]
     if next_ep != current_ep and next_ep.startswith("ep"):
         new_crystals += 10
 
     if next_scene == "__ending_router__":
-        # Count ally flags from all episodes
-        ally_flags = {
-            "media_star", "team_loyalty", "fired_toxic",
-            "hired_visioner", "mentorship_succ",
-            "vendor_defeated", "council_respect",
-        }
-        flag_count = sum(1 for f in flags if f in ally_flags)
+        # ── ФИКС: учитываем и базовые, и премиальные флаги союзников ─────────
+        # Каждая пара — это (базовый флаг, премиальный флаг) одного эпизода.
+        # Достаточно получить хотя бы один из двух.
+        ally_flag_groups = [
+            {"council_respect"},                          # ep1
+            {"media_star"},                               # ep2
+            {"team_loyalty"},                             # ep3
+            {"fired_toxic"},                              # ep4
+            {"hired_visioner", "hired_visioner_perfect"}, # ep5 — оба варианта
+            {"mentorship_succ", "invisible_success"},     # ep6 — оба варианта
+            {"vendor_defeated", "vendor_crushed"},        # ep8 — оба варианта
+        ]
+        flag_set = set(flags)
+        flag_count = sum(
+            1 for group in ally_flag_groups
+            if group & flag_set  # хотя бы один флаг из группы есть у игрока
+        )
         authority = new_authority
 
         if flag_count >= 7 or (flag_count >= 5 and authority >= 5):
