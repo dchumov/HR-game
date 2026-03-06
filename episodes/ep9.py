@@ -234,7 +234,7 @@ SCENES = {
 
     # ── Сцена 9.7 ─────────────────────────────
     "ep9_recovery": {
-        "image": "artem_door_opens.png",
+        "image": "artem_door_opens.jpeg",
         "text": (
             "🟢 *Замок щёлкает*\n\n"
             "Дверь медленно открывается.\n"
@@ -258,7 +258,7 @@ SCENES = {
 
     # ── Сцена 9.8 (кристальный путь) ──────────
     "ep9_recovery_premium": {
-        "image": "artem_hero.png",
+        "image": "artem_hero.jpeg",
         "text": (
             "💚 *Восемь часов спустя*\n\n"
             "Мониторы в серверной — зелёные.\n"
